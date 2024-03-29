@@ -1,8 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-
+const authService = require('../../services/authService');
 const pool = require('../database');
-const helpers = require('../lib/helpers');
 
 //Users
 passport.use('local.signin', new LocalStrategy({
@@ -10,13 +9,12 @@ passport.use('local.signin', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, email, password, done) => {
-    console.log(req.body);
-    const rows = await pool.query('SELECT rol.nombre, rol.id as rolId, users.userId as id, users.id, users.perEditarId, users.perEliminarId, users.nombre, users.apellido_paterno, users.apellido_materno, users.fotografia, users.email, users.password FROM users INNER JOIN rol ON users.rolId = rol.id where users.email = ?', [email]);
-    if (rows.length > 0) {
-        const user = rows[0];
-        const validPassword = await (password, user.password);
+    const user = await authService.loginUser(email, password);
+    if (user != null) {
+        const users = user.dataValues;
+        const validPassword = await (password, users.password);
         if (validPassword) {
-            done(null, user, req.flash('success', 'Bienvenido M.V.Z. ' + user.nombre));
+            done(null, user, req.flash('success', 'Bienvenido M.V.Z.' ));
         } else {
             done(null, false);
         }
@@ -25,10 +23,10 @@ passport.use('local.signin', new LocalStrategy({
     }
 }));
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
+passport.serializeUser(function(usersLogin, done) {
+    done(null, usersLogin);
   });
   
-  passport.deserializeUser(function(user, done) {
-    done(null, user);
+  passport.deserializeUser(function(usersLogin, done) {
+    done(null, usersLogin);
   });

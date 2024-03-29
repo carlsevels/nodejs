@@ -1,9 +1,10 @@
 const mysql = require ('mysql');
 const { promisify } = require('util');
+const env = process.env.NODE_ENV || 'test';
+const config = require(__dirname + '/../config/config.json')[env];
+// const { database } = require('./keys');
 
-const { database } = require('./keys');
-
-const pool = mysql.createPool(database);
+const pool = mysql.createPool(env);
 
 pool.getConnection((err, connection) => {
     if(err) {

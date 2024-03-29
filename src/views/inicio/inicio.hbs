@@ -1,11 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>INICIO</h1>
-</body>
-</html>
+<div class="mx-auto p-3">
+    <h2>Bienvenido {{user.firstName}}</h2>
+    <a class="btn btn-outline-danger" href="/logout">
+        Cerrar sesion
+    </a>
+    {{!-- <a href="/materias/materiaAdd" class="btn btn-success">Agregar Materia</a> --}}
+    <a href="/materias" class="btn btn-success">Ver Materias</a>
+    {{!-- <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Hora</th>
+                <th scope="col">Grupo</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <th scope="row">{{id}}</th>
+                <td>{{nombre}}</td>
+                <td>{{hora}}</td>
+                <td>{{grupo}}</td>
+                <td><!-- Button trigger modal -->
+                    <form action="/materia/{{id}}" method="post">
+                        <a href="/materia/detalles/{{id}}" type="button" class="btn btn-outline-info">
+                            Detalles
+                        </a>
+                    </form>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td>No hay materias registradas!</td>
+            </tr>
+            {{/each}}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Hora</th>
+                <th scope="col">Grupo</th>
+            </tr>
+        </tfoot>
+    </table> --}}
+</div>
+
+{{!-- {{#each data}}
+<!-- Modal -->
+<div class="modal fade" id="deleteMatera{{id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar {{nombre}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Una vez eliminads no se podra recuperar esta materia.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}} --}}

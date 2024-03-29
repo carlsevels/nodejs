@@ -1,0 +1,104 @@
+<div class="p-3">
+    <h1>Detalles</h1>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{data.nombre}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{data.hora}} | {{data.grupo}}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{{data.createdAt}}</h6>
+            <a data-bs-toggle="modal" data-bs-target="#edit" class="card-link">Editar</a>
+            <a data-bs-toggle="modal" data-bs-target="#deleteModal" class="card-link">Eliminar</a>
+        </div>
+    </div>
+</div>
+
+<!-- Delete modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminar {{data.nombre}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Despues de eliminar este registro no podras recuperarlo.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button id="deleteButton" type="submit" class="btn btn-primary">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Model -->
+<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form id="updateForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="offcanvas-body text-dark">
+                        <div class="form-floating mb-3">
+                            <textarea name="nombre" class="form-control" placeholder="Leave a comment here" id="nombre"
+                                style="height: 100px">{{data.nombre}}</textarea>
+                            <label for="floatingTextarea2">Nombre</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="time" value="{{data.hora}}" type="text" name="hora" placeholder="Hora" autofocus class="form-control"
+                                id="hora" aria-describedby="emailHelp">
+                            <label for="floatingInput">Hora</label>
+                            {{!-- <textarea name="hora" class="form-control" placeholder="Leave a comment here"
+                                id="hora" style="height: 100px">{{data.hora}}</textarea>
+                            <label for="floatingTextarea2">Hora</label> --}}
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea name="grupo" class="form-control" placeholder="Leave a comment here" id="grupo"
+                                style="height: 100px">{{data.grupo}}</textarea>
+                            <label for="floatingTextarea2">Grupo</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('deleteButton').addEventListener('click', async () => {
+        try {
+            const response = await axios.delete(`http://localhost:3000/materias/delete/` + {{ data.id }});
+    alert('Materia eliminado exitosamente');
+            } catch (error) {
+        console.error('Error al eliminar materia:', error.response.data);
+        alert('Hubo un error al eliminar el materia');
+    }
+        });
+</script>
+
+
+<script>
+    document.getElementById('updateForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const nombre = document.getElementById('nombre').value;
+        const hora = document.getElementById('hora').value;
+        const grupo = document.getElementById('grupo').value;
+
+        try {
+            const response = await axios.put(`http://localhost:3000/materias/edit/` + {{ data.id }}, { nombre, hora, grupo });
+    console.log(response.data); // Mensaje de éxito o cualquier otra respuesta del servidor
+    alert('Materia actualizada exitosamente');
+        } catch (error) {
+        console.error('Error al actualizar materia:', error.response.data);
+        alert('Hubo un error al actualizar la materia');
+    }
+    });
+</script>

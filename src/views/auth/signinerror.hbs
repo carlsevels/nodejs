@@ -1,0 +1,23 @@
+<form class="card col-sm-4 mx-auto shadow-lg position-absolute top-50 start-50 translate-middle bg-body rounded" action="/signin" method="POST">
+    <div class="card-body">
+        <img src="css/img/CatrinaLogo2.png" style="width: 200px;" alt="Logo Catrina" class="rounded mx-auto d-block">
+        <hr>
+        <div class="alert alert-danger text-center" role="alert">
+            Correo o contraseña equivocada, <a href="/signin" class="alert-link">Intenta nuevamente</a>.
+        </div>
+        <div class="form-floating">
+            <input type="email" name="email" class="form-control" id="floatingInput email"
+                placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+        </div>
+        <br>
+        <div class="form-floating">
+            <input type="password" name="password" class="form-control" id="floatingInput password"
+                placeholder="name@example.com" autocomplete="on">
+            <label for="floatingInput">Password</label>
+        </div>
+    </div>
+    <div class="card-footer text-end">
+        <button type="submit" class="btn btn-primary">Login</button>
+    </div>
+</form>

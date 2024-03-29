@@ -1,0 +1,38 @@
+{{#if success}}
+<div role="alert"
+    class="alert alert-light fade show alert-dismissible position-absolute bottom-0 start-50 translate-middle-x border-secondary w-100"
+    style="z-index: 999; background-color: #ffffff93; backdrop-filter: blur(2px);">
+    <div class="border-bottom border-secondary mb-3">
+        <b>Exito!</b>
+    </div>
+    <div>
+        <p>{{success}}</p>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
+
+{{#if message}}
+<div style="margin: 20px; z-index: 999;">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+{{/if}}
+
+{{#if consulta}}
+<div class="col-sm-6 mx-auto m-4" style="margin: 20px; z-index: 999; position: fixed; right: 0px; background-color: rgb(12, 53, 63); color:white;">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="alert alert-dismissible fade show" role="alert">
+                {{consulta}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <a href="/consultas/consultaspac/{{consultas.idpaciente}}" class="btn btn-outline-light">Ver</a>
+        </div>
+    </div>
+</div>
+{{/if}}

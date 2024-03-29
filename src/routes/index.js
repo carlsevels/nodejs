@@ -9,12 +9,13 @@ router.get('/', (req, res) => {
     res.render('auth/signin');
 });
 
-module.exports = app => {
-    router.get('/', home.index)
-    router.post('/pacientes/:idpaciente', image.index);
-    router.post('/pacientes/add', images.create);
-    router.post('/pacientes/:idpaciente', images.delete)
-    app.use(router);
-};
+// router.get('/', isLoggedIn, async (req, res, email, password) => {
+//     const userDate = await authService.loginUser(email, password); 
+//     const response = await axios.get('http://localhost:3000/inicio/materias'); // Reemplaza con la URL de tu API
+//     const data = response.data;
+//     console.log("MATERIAS: " + data);
+//     console.log('Inicio');
+//     res.render('materias/materias', {userDate, data});
+// });
 
 module.exports = router;

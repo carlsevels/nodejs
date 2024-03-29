@@ -1,15 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
+const exphbs = require('express-handlebars');
 const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session');
-const MySQLStore = require('express-mysql-session');
+const MySQLStore = require('express-mysql-session')(session);
 const passport = require('passport');
-const multer = require('multer');
 const bodyParser = require('body-parser');
-const routes = require('./routes/index');
 const { database } = require('./keys');
-const exphbs = require('express-handlebars');
 
 //Initialization
 const app = express();
@@ -26,23 +24,24 @@ app.engine('.hbs', exphbs({
     helpers: require('./lib/handlebars')
 }));
 app.set('view engine', '.hbs');
-app.set('json spaces', 2)
+// app.set('json spaces', 2)
 
 //Middleware
 app.use(session({
-    secret: 'nodejs',
+    secret: 'nodejs1731896588909819181384',
     resave: false,
     saveUninitialized: false,
     store: new MySQLStore(database)
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(bodyParser.json());
 app.use(flash());
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 //Global Variables
 app.use((req, res, next) => {
@@ -52,15 +51,15 @@ app.use((req, res, next) => {
     next();
 });
 
-
 //Routes
-app.use(require('./routes'));
+app.use(require('./routes/index'));
 app.use(require('./routes/authentications'));
 app.use('/inicio', require('./routes/inicio'));
+app.use('/materias', require('./routes/materias'));
 
 //Public
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/public', express.static(path.join(__dirname, '/public')))
+// app.use('/public', express.static(path.join(__dirname, '/public')))
 
 //Starting the server
 app.listen(app.get('port'), () => {
